@@ -103,12 +103,16 @@ endfunction
 
 function! s:fire_pre_triggers()
   if !s:before_function_called
-    silent doautocmd User MultipleCursorsPre
+    silent doautocmd <nomodeline> User MultipleCursorsPre
     if exists('*Multiple_cursors_before')
       exe "call Multiple_cursors_before()"
     endif
     let s:before_function_called = 1
   endif
+endfunction
+
+function! multiple_cursors#reset()
+  call s:cm.reset(1, 1, 1)
 endfunction
 
 " Creates a new cursor. Different logic applies depending on the mode the user
@@ -461,7 +465,7 @@ function! s:CursorManager.reset(restore_view, restore_setting, ...) dict
     if exists('*Multiple_cursors_after')
       exe "call Multiple_cursors_after()"
     endif
-    silent doautocmd User MultipleCursorsPost
+    silent doautocmd <nomodeline> User MultipleCursorsPost
     let s:before_function_called = 0
   endif
 endfunction

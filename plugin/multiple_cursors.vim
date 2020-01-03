@@ -8,6 +8,11 @@
 " - Integrate with the status line? Maybe show a special multicursor mode?
 " - Support mouse? Ctrl/Cmd click to set cursor?
 "===============================================================================
+if exists("g:multiple_cursors") || &cp
+ finish
+endif
+let g:multiple_cursors = 1
+
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -99,6 +104,9 @@ endif
 " Commands
 command! -nargs=1 -range=% MultipleCursorsFind
       \ call multiple_cursors#find(<line1>, <line2>, <q-args>)
+
+command! -nargs=0 MultipleCursorsReset
+      \ call multiple_cursors#reset()
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
